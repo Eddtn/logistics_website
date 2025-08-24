@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:logistics_website/onstants/appbar2.dart';
+import 'package:logistics_website/onstants/highlightedText.dart';
 import 'package:logistics_website/onstants/drop_menu_text.dart';
+import 'package:logistics_website/onstants/socialIcons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -64,31 +65,32 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               // Spacer(),
-                              _SocialIcon(
+                              SocialIcon(
                                 icon: FontAwesomeIcons.facebookF,
 
                                 // color: Colors.white,
                                 url: '',
                                 //  'https://facebook.com/khairfoundation',
                               ),
-                              _SocialIcon(
+                              SocialIcon(
                                 icon: FontAwesomeIcons.instagram,
                                 color: Colors.white,
                                 url: '',
                                 // 'https://instagram.com/khairfoundation',
                               ),
-                              _SocialIcon(
+                              SocialIcon(
                                 icon: FontAwesomeIcons.twitter,
                                 color: Colors.white,
                                 url: '',
                                 // 'https://twitter.com/khairfoundation',
                               ),
-                              _SocialIcon(
+                              SocialIcon(
                                 icon: FontAwesomeIcons.envelope,
                                 color: Colors.white,
                                 url: '',
                                 // 'mailto:support@khairfoundations.com',
                               ),
+
                               // SizedBox(width: 25),
                             ],
                           ),
@@ -122,32 +124,34 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           'info@logisticssite.com',
                           style: TextStyle(color: Colors.white, fontSize: 15),
                         ),
+
                         Spacer(),
-                        _SocialIcon(
+                        SocialIcon(
                           icon: FontAwesomeIcons.facebookF,
 
                           // color: Colors.white,
                           url: '',
                           //  'https://facebook.com/khairfoundation',
                         ),
-                        _SocialIcon(
+                        SocialIcon(
                           icon: FontAwesomeIcons.instagram,
                           color: Colors.white,
                           url: '',
                           // 'https://instagram.com/khairfoundation',
                         ),
-                        _SocialIcon(
+                        SocialIcon(
                           icon: FontAwesomeIcons.twitter,
                           color: Colors.white,
                           url: '',
                           // 'https://twitter.com/khairfoundation',
                         ),
-                        _SocialIcon(
+                        SocialIcon(
                           icon: FontAwesomeIcons.envelope,
                           color: Colors.white,
                           url: '',
                           // 'mailto:support@khairfoundations.com',
                         ),
+
                         SizedBox(width: 25),
                       ],
                     ),
@@ -157,7 +161,8 @@ class _AppBarWidgetState extends State<AppBarWidget> {
 
         LayoutBuilder(
           builder: (context, constraints) {
-            final bool isMobile = constraints.maxWidth <= 600;
+            // final bool isMobile = constraints.maxWidth <= 640;
+            final bool isMobile = MediaQuery.of(context).size.width <= 800;
 
             return isMobile
                 ? Column(
@@ -207,7 +212,7 @@ class _AppBarWidgetState extends State<AppBarWidget> {
                           "Logistics",
                           style: TextStyle(
                             fontSize: 20,
-                            color: Color(0xFFFF4800),
+                            color: Color.fromARGB(255, 72, 72, 72),
                           ),
                         ),
 
@@ -241,29 +246,29 @@ class _AppBarWidgetState extends State<AppBarWidget> {
   }
 }
 
-class _SocialIcon extends StatelessWidget {
-  final IconData icon;
-  final String url;
-  final Color? color;
+// class _SocialIcon extends StatelessWidget {
+//   final IconData icon;
+//   final String url;
+//   final Color? color;
 
-  const _SocialIcon({required this.icon, required this.url, this.color});
+//   const _SocialIcon({required this.icon, required this.url, this.color});
 
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: FaIcon(icon, size: 15, color: color ?? Colors.white),
-      onPressed: () async {
-        // Navigator.of(context).push(
-        //   MaterialPageRoute(
-        //     builder: (context) => const HomePage(),
-        //   ),
-        // );
-        final uri = Uri.parse(url);
-        if (await canLaunchUrl(uri)) {
-          await launchUrl(uri, mode: LaunchMode.externalApplication);
-        }
-      },
-      tooltip: url,
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return IconButton(
+//       icon: FaIcon(icon, size: 15, color: color ?? Colors.white),
+//       onPressed: () async {
+//         // Navigator.of(context).push(
+//         //   MaterialPageRoute(
+//         //     builder: (context) => const HomePage(),
+//         //   ),
+//         // );
+//         final uri = Uri.parse(url);
+//         if (await canLaunchUrl(uri)) {
+//           await launchUrl(uri, mode: LaunchMode.externalApplication);
+//         }
+//       },
+//       tooltip: url,
+//     );
+//   }
+// }

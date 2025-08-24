@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:logistics_website/pages/aboutPage/aboutUsPage.dart';
 import 'package:logistics_website/pages/homescreen/homescreen.dart';
+import 'package:logistics_website/pages/price/pricingPage.dart';
+import 'package:logistics_website/pages/price/widget/requestQuote.dart';
+import 'package:logistics_website/pages/services/servicePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -17,7 +21,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const HomeScreen(),
+      home:
+          const
+          // ServicePageScreen(),
+          // PricingPage(),
+          // AboutUsPage(),
+          HomeScreen(),
     );
   }
 }
