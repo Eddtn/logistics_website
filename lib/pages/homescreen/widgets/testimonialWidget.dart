@@ -44,8 +44,11 @@ class _TestimonySectionState extends State<TestimonySection> {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
     final bool isMobile = screenWidth < 600;
+    final bool isTablet = screenWidth > 600 && screenWidth <= 1000;
+    final bool isDesktop = screenWidth > 1000;
 
     return Container(
+      margin: EdgeInsets.only(left: 80, right: 80),
       width: screenWidth * 0.9,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -71,7 +74,7 @@ class _TestimonySectionState extends State<TestimonySection> {
             itemCount: items.length,
 
             options: CarouselOptions(
-              height: isMobile ? screenHeight * 0.3 : screenHeight * 0.2,
+              height: isMobile ? screenHeight * 0.3 : screenHeight * 0.25,
 
               aspectRatio: 1.5,
               autoPlay: true,
@@ -125,72 +128,70 @@ class TestimonyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 60, right: 60),
-      child: AnimatedOpacity(
-        duration: const Duration(milliseconds: 500),
-        opacity: isHighlighted ? 1.0 : 0.4, // inactive = transparent
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 1000),
-          margin: const EdgeInsets.symmetric(horizontal: 6),
-          // padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(color: Colors.white),
-          child: Stack(
-            clipBehavior: Clip.none, // allow icon to overflow
-            children: [
-              Positioned(
-                top: -30, // push slightly above container
-                right: -10, // push slightly beyond container edge
-                child: Icon(
-                  Icons.format_quote,
-                  size: 80,
-                  color: const Color(0xffFF4800),
-                ),
+    // padding: const EdgeInsets.only(left: 60, right: 60),
+    return AnimatedOpacity(
+      duration: const Duration(milliseconds: 500),
+      opacity: isHighlighted ? 1.0 : 0.4, // inactive = transparent
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 1000),
+        // margin: const EdgeInsets.symmetric(horizontal: 6),
+        // padding: const EdgeInsets.all(8),
+        decoration: BoxDecoration(color: Colors.grey.shade100),
+        child: Stack(
+          clipBehavior: Clip.none, // allow icon to overflow
+          children: [
+            Positioned(
+              top: -30, // push slightly above container
+              right: -10, // push slightly beyond container edge
+              child: Icon(
+                Icons.format_quote,
+                size: 80,
+                color: const Color(0xffFF4800),
               ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 15),
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 24,
-                        backgroundImage: AssetImage(data['image']!),
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            data['name']!,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15,
-                            ),
-                          ),
-                          Text(
-                            data['desc']!,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.grey[800],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  Text(
-                    data['quote']!,
-                    style: TextStyle(
-                      fontStyle: FontStyle.italic,
-                      fontSize: 14,
-                      color: Colors.grey[600],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 15),
+                Row(
+                  children: [
+                    CircleAvatar(
+                      radius: 24,
+                      backgroundImage: AssetImage(data['image']!),
                     ),
+                    const SizedBox(width: 10),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          data['name']!,
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 15,
+                          ),
+                        ),
+                        Text(
+                          data['desc']!,
+                          style: TextStyle(
+                            fontSize: 13,
+                            color: Colors.grey[800],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Text(
+                  data['quote']!,
+                  style: TextStyle(
+                    fontStyle: FontStyle.italic,
+                    fontSize: 14,
+                    color: Colors.grey[600],
                   ),
-                ],
-              ),
-            ],
-          ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

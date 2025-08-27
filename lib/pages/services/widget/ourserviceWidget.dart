@@ -101,7 +101,8 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
             ? Container(
                 color: isMobile ? const Color(0xffF2F2F4) : null,
                 height: isDesktop ? screenHeight * 0.7 : null,
-                padding: const EdgeInsets.only(left: 15, right: 15),
+                // padding: const EdgeInsets.only(left: 15, right: 15),
+                margin: EdgeInsets.only(top: 40),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
@@ -122,38 +123,41 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
                     ),
                     const SizedBox(height: 10),
                     // GridView wrapped with SizedBox to constrain height
-                    SizedBox(
+                    Container(
+                      margin: EdgeInsets.only(right: 80, left: 80, top: 40),
                       height: 500, // Adjust based on expected content
                       child: GridView.count(
                         crossAxisCount: 2,
                         crossAxisSpacing: 20,
                         mainAxisSpacing: 20,
-                        childAspectRatio: 1.75,
+                        childAspectRatio: 2,
+
+                        //  1.75,
                         physics: const NeverScrollableScrollPhysics(),
                         children: [
                           FlexibleServiceCard(
-                            width: 300,
+                            width: 400,
                             comment:
                                 "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
                             icon: Icons.fire_truck_sharp,
                             text: "Land Transport",
                           ),
                           FlexibleServiceCard(
-                            width: 300,
+                            width: 400,
                             comment:
                                 "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
                             icon: Icons.fire_truck_sharp,
                             text: "Land Transport",
                           ),
                           FlexibleServiceCard(
-                            width: 300,
+                            width: 400,
                             comment:
                                 "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
                             icon: Icons.fire_truck_sharp,
                             text: "Land Transport",
                           ),
                           FlexibleServiceCard(
-                            width: 300,
+                            width: 400,
                             comment:
                                 "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
                             icon: Icons.fire_truck_sharp,

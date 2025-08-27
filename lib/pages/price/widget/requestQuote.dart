@@ -91,11 +91,12 @@ class _RequestQuoteWidgetState extends State<RequestQuoteWidget> {
             color: Color(0xffF2F2F4),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+
               children: [
                 Container(
                   // width: screenWidth * 0.4,
-                  margin: EdgeInsets.only(left: 90, right: 90),
-                  padding: EdgeInsets.all(40),
+                  margin: EdgeInsets.only(left: 80, right: 80),
+                  padding: EdgeInsets.only(top: 40, bottom: 40),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -137,12 +138,12 @@ class _RequestQuoteWidgetState extends State<RequestQuoteWidget> {
                     ],
                   ),
                 ),
-                // _buildTextSection(isMobile),
-                // const SizedBox(width: 20),
-                Container(
-                  margin: const EdgeInsets.only(left: 90, right: 90),
 
-                  padding: EdgeInsets.all(40),
+                // _buildTextSection(isMobile),
+                Container(
+                  margin: const EdgeInsets.only(left: 80, right: 80),
+
+                  // padding: EdgeInsets.all(40),
                   child: FormSection(),
                 ),
               ],
