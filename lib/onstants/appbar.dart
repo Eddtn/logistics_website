@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:logistics_website/onstants/highlightedText.dart';
 import 'package:logistics_website/onstants/drop_menu_text.dart';
+import 'package:logistics_website/onstants/responsiveness.dart';
 import 'package:logistics_website/onstants/socialIcons.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,9 +21,10 @@ class _AppBarWidgetState extends State<AppBarWidget> {
       children: [
         LayoutBuilder(
           builder: (context, constraints) {
-            final bool isMobile = constraints.maxWidth < 600;
+            // final bool isMobile = constraints.maxWidth < 600;
 
-            return isMobile
+            return Responsive.isMobile(context)
+                // isMobile
                 ? Container(
                     height: 80,
                     color: Color(0xFF1F1F2E), // ✅ This works

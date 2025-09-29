@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logistics_website/pages/homescreen/widgets/teamWidget.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/teamWidget.dart';
 
 class DeliveryTeamSection extends StatefulWidget {
   const DeliveryTeamSection({super.key});

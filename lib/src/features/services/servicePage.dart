@@ -3,11 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logistics_website/onstants/appbar.dart';
 import 'package:logistics_website/onstants/floatingWidget.dart';
 import 'package:logistics_website/onstants/footer.dart';
-import 'package:logistics_website/pages/homescreen/widgets/firsthomePage.dart';
-import 'package:logistics_website/pages/homescreen/widgets/testimonialWidget.dart';
-import 'package:logistics_website/pages/price/widget/getaquotewidget.dart';
-import 'package:logistics_website/pages/price/widget/pricing.dart';
-import 'package:logistics_website/pages/services/widget/serviceWidget.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/firsthomePage.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/testimonialWidget.dart';
+import 'package:logistics_website/src/features/price/widget/getaquotewidget.dart';
+import 'package:logistics_website/src/features/price/widget/pricing.dart';
+import 'package:logistics_website/src/features/price/widget/requestQuote.dart';
+import 'package:logistics_website/src/features/services/widget/ourserviceWidget.dart';
+import 'package:logistics_website/src/features/services/widget/serviceWidget.dart';
 
 class ServicePageScreen extends StatefulWidget {
   const ServicePageScreen({super.key});
@@ -100,8 +102,8 @@ class _ServicePageScreenState extends State<ServicePageScreen> {
                 ],
               ),
             ),
-            ServiceWidget(),
-            QuoteWidget(),
+            OurServiceWidget(),
+            RequestQuoteWidget(),
             SizedBox(height: 20),
             TestimonySection(),
             FooterPage(),

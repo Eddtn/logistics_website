@@ -3,9 +3,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logistics_website/onstants/appbar.dart';
 import 'package:logistics_website/onstants/floatingWidget.dart';
 import 'package:logistics_website/onstants/footer.dart';
-import 'package:logistics_website/pages/homescreen/widgets/firsthomePage.dart';
-import 'package:logistics_website/pages/homescreen/widgets/testimonialWidget.dart';
-import 'package:logistics_website/pages/price/widget/pricing.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/firsthomePage.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/testimonialWidget.dart';
+import 'package:logistics_website/src/features/price/widget/pricing.dart';
 
 class PricingPage extends StatefulWidget {
   const PricingPage({super.key});

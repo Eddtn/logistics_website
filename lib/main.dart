@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:logistics_website/pages/aboutPage/aboutUsPage.dart';
-import 'package:logistics_website/pages/homescreen/homescreen.dart';
-import 'package:logistics_website/pages/price/pricingPage.dart';
-import 'package:logistics_website/pages/price/widget/requestQuote.dart';
-import 'package:logistics_website/pages/services/servicePage.dart';
+import 'package:logistics_website/src/features/Blogpages/LatestBlog.dart';
+import 'package:logistics_website/src/features/Blogpages/widgets/latestblogWodget.dart';
+import 'package:logistics_website/src/features/aboutPage/aboutUsPage.dart';
+import 'package:logistics_website/src/features/homescreen/homescreen.dart';
+import 'package:logistics_website/src/features/price/pricingPage.dart';
+import 'package:logistics_website/src/features/price/widget/requestQuote.dart';
+import 'package:logistics_website/src/features/services/servicePage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -23,10 +25,12 @@ class MyApp extends StatelessWidget {
       ),
       home:
           const
-          // ServicePageScreen(),
-          // PricingPage(),
-          // AboutUsPage(),
-          HomeScreen(),
+          //  LatestBlogWidget(),
+          LatestBlogScreen(),
+      // ServicePageScreen(),
+      // PricingPage(),
+      // AboutUsPage(),
+      // HomeScreen(),
     );
   }
 }

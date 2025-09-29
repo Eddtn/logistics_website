@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logistics_website/pages/homescreen/widgets/animatebutton.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/animatebutton.dart';
 
 class aboutUsWidget extends StatelessWidget {
   const aboutUsWidget({super.key});

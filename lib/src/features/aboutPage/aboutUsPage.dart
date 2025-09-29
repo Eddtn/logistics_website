@@ -3,10 +3,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logistics_website/onstants/appbar.dart';
 import 'package:logistics_website/onstants/floatingWidget.dart';
 import 'package:logistics_website/onstants/footer.dart';
-import 'package:logistics_website/pages/aboutPage/widgets/aboutUsWidget.dart';
-import 'package:logistics_website/pages/aboutPage/widgets/deliveryTeamSection.dart';
-import 'package:logistics_website/pages/homescreen/widgets/firsthomePage.dart';
-import 'package:logistics_website/pages/services/widget/chooseUs.dart';
+import 'package:logistics_website/src/features/aboutPage/widgets/aboutUsWidget.dart';
+import 'package:logistics_website/src/features/aboutPage/widgets/deliveryTeamSection.dart';
+import 'package:logistics_website/src/features/homescreen/widgets/firsthomePage.dart';
+import 'package:logistics_website/src/features/services/widget/chooseUs.dart';
 
 class AboutUsPage extends StatefulWidget {
   const AboutUsPage({super.key});

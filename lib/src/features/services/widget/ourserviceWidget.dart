@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:logistics_website/onstants/responsiveness.dart';
 
 class OurServiceWidget extends StatefulWidget {
   const OurServiceWidget({super.key});
@@ -14,8 +15,11 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
-        double screenWidth = constraints.maxWidth;
-        double screenHeight = constraints.maxHeight;
+        // double screenWidth = constraints.maxWidth;
+        // double screenHeight = constraints.maxHeight;
+        final screenWidth = MediaQuery.of(context).size.width;
+        final screenHeight = MediaQuery.of(context).size.height;
+
         final bool isMobile = screenWidth <= 648;
         final bool isTablet = screenWidth > 648 && screenWidth <= 1000;
         final bool isDesktop = screenWidth > 1000;
@@ -23,7 +27,7 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
         return isDesktop
             ? Container(
                 // margin: EdgeInsets.all(40),
-                height: 500,
+                height: screenHeight * 0.9,
 
                 //  screenHeight * 0.7,
                 margin: EdgeInsets.only(right: 40, left: 30),
@@ -97,10 +101,20 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
                   ),
                 ),
               )
-            : isTablet
+            :
+              //  Responsive.isMobileLarge(context)
+              isTablet
             ? Container(
-                color: isMobile ? const Color(0xffF2F2F4) : null,
-                height: isDesktop ? screenHeight * 0.7 : null,
+                color: Color(0xffF2F2F4),
+                height: screenHeight * 1.0,
+                // color: Responsive.isMobile(context)
+                //     ? const Color(0xffF2F2F4)
+                //     : null,
+                // height: Responsive.isDesktop(context)
+                //     ? screenHeight * 0.7
+                //     : null,
+                // color: isMobile ? const Color(0xffF2F2F4) : null,
+                // height: isDesktop ? screenHeight * 0.7 : null,
                 // padding: const EdgeInsets.only(left: 15, right: 15),
                 margin: EdgeInsets.only(top: 40),
                 child: Column(
@@ -123,54 +137,61 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
                     ),
                     const SizedBox(height: 10),
                     // GridView wrapped with SizedBox to constrain height
-                    Container(
-                      margin: EdgeInsets.only(right: 80, left: 80, top: 40),
-                      height: 500, // Adjust based on expected content
-                      child: GridView.count(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 20,
-                        childAspectRatio: 2,
+                    Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Container(
+                        // margin: EdgeInsets.only(right: 10, left: 10),
+                        height:
+                            screenHeight *
+                            0.75, // Adjust based on expected content
+                        child: GridView.count(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 25,
+                          mainAxisSpacing: 25,
+                          childAspectRatio: 2,
 
-                        //  1.75,
-                        physics: const NeverScrollableScrollPhysics(),
-                        children: [
-                          FlexibleServiceCard(
-                            width: 400,
-                            comment:
-                                "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
-                            icon: Icons.fire_truck_sharp,
-                            text: "Land Transport",
-                          ),
-                          FlexibleServiceCard(
-                            width: 400,
-                            comment:
-                                "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
-                            icon: Icons.fire_truck_sharp,
-                            text: "Land Transport",
-                          ),
-                          FlexibleServiceCard(
-                            width: 400,
-                            comment:
-                                "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
-                            icon: Icons.fire_truck_sharp,
-                            text: "Land Transport",
-                          ),
-                          FlexibleServiceCard(
-                            width: 400,
-                            comment:
-                                "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
-                            icon: Icons.fire_truck_sharp,
-                            text: "Land Transport",
-                          ),
-                        ],
-                        // List.generate(4, (index) => _serviceCard()),
+                          //  1.75,
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            FlexibleServiceCard(
+                              width: 400,
+                              comment:
+                                  "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
+                              icon: Icons.fire_truck_sharp,
+                              text: "Land Transport",
+                            ),
+                            FlexibleServiceCard(
+                              width: 400,
+                              comment:
+                                  "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
+                              icon: Icons.fire_truck_sharp,
+                              text: "Land Transport",
+                            ),
+                            FlexibleServiceCard(
+                              width: 400,
+                              comment:
+                                  "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
+                              icon: Icons.fire_truck_sharp,
+                              text: "Land Transport",
+                            ),
+                            FlexibleServiceCard(
+                              width: 400,
+                              comment:
+                                  "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
+                              icon: Icons.fire_truck_sharp,
+                              text: "Land Transport",
+                            ),
+                          ],
+                          // List.generate(4, (index) => _serviceCard()),
+                        ),
                       ),
                     ),
                   ],
                 ),
               )
-            : Container(
+            : isMobile
+            //  Responsive.isMobile(context)
+            ? Container(
                 height: 900,
                 // width: screenWidth * 3.0,
                 // color: Colors.red,
@@ -453,63 +474,64 @@ class _OurServiceWidgetState extends State<OurServiceWidget> {
                     // ),
                   ],
                 ),
-              );
+              )
+            : widget;
       },
     );
   }
 }
 
-Widget _serviceCard() {
-  return SizedBox(
-    // height: 300,
-    width: 250,
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          height: 80,
-          color: const Color(0xFFFF4800),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              Icon(Icons.airplanemode_active_outlined, color: Colors.white),
-              SizedBox(width: 10),
-              Text(
-                "Air Freight",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: 10),
-        Flexible(
-          child: Text(
-            "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        const SizedBox(height: 10),
-        Center(
-          child: Text(
-            "Read More",
-            style: GoogleFonts.poppins(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: const Color(0xFFFF4800),
-            ),
-          ),
-        ),
-      ],
-    ),
-  );
-}
+// Widget _serviceCard() {
+//   return SizedBox(
+//     // height: 300,
+//     width: 250,
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         Container(
+//           height: 80,
+//           color: const Color(0xFFFF4800),
+//           child: Row(
+//             mainAxisAlignment: MainAxisAlignment.center,
+//             children: const [
+//               Icon(Icons.airplanemode_active_outlined, color: Colors.white),
+//               SizedBox(width: 10),
+//               Text(
+//                 "Air Freight",
+//                 style: TextStyle(
+//                   fontSize: 20,
+//                   fontWeight: FontWeight.bold,
+//                   color: Colors.white,
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ),
+//         const SizedBox(height: 10),
+//         Flexible(
+//           child: Text(
+//             "Diam amet eos at no eos sit lorem, amet rebum ipsum clita stet diam sea est diam",
+//             style: GoogleFonts.poppins(
+//               fontSize: 14,
+//               fontWeight: FontWeight.w500,
+//             ),
+//           ),
+//         ),
+//         const SizedBox(height: 10),
+//         Center(
+//           child: Text(
+//             "Read More",
+//             style: GoogleFonts.poppins(
+//               fontSize: 14,
+//               fontWeight: FontWeight.bold,
+//               color: const Color(0xFFFF4800),
+//             ),
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
 class FlexibleServiceCard extends StatelessWidget {
   String text;
@@ -526,12 +548,16 @@ class FlexibleServiceCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
     return Expanded(
       child: Container(
         // margin: EdgeInsets.only(right: 40, left: 40),
-        width: 250,
+        width: screenWidth * 0.3,
+        height: screenHeight * 0.5,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
               height: 80,

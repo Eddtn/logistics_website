@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logistics_website/pages/price/widget/formfield.dart';
+import 'package:logistics_website/src/features/price/widget/formfield.dart';
 
 class RequestQuoteWidget extends StatefulWidget {
   const RequestQuoteWidget({super.key});
