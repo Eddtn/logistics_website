@@ -1,0 +1,71 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:khair_foundation/features/Admin/auth/view/pages/log_in_page.dart';
+import 'package:khair_foundation/features/Admin/create_testimony/view/create_testimony.dart';
+import 'package:khair_foundation/features/Admin/main_screen/views/dashboard_screen.dart';
+import 'package:khair_foundation/features/Admin/main_screen/widgets/manage_crpto_page.dart';
+import 'package:khair_foundation/features/confirm_donation_page/view/confirm_donation.dart';
+import 'package:khair_foundation/features/donate_page/view/page/donatePage.dart';
+import 'package:khair_foundation/features/home_page/view/page/home_Page.dart';
+import 'package:khair_foundation/features/home_page/view/widgets/delete_testimony.dart';
+
+final GoRouter router = GoRouter(
+  initialLocation: '/',
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const HomeScreen(),
+      // HomePage(),
+    ),
+    GoRoute(
+      path: '/HomePage',
+      builder: (context, state) => const HomeScreen(),
+      // HomePage(),
+    ),
+    GoRoute(
+      path: '/login',
+      builder: (context, state) => LoginPage(),
+    ),
+    GoRoute(
+      path: '/dashboard/:email',
+      builder: (BuildContext context, GoRouterState state) {
+        final email = state.pathParameters['email']!;
+        return DashboardScreen(email: email);
+      },
+    ),
+    GoRoute(
+      path: '/donate',
+      builder: (context, state) => const DonationScreen(),
+    ),
+    GoRoute(
+      path: '/donation-confirmation/:amount/:cryptoName/:donationType',
+      name: 'donationConfirmation',
+      builder: (context, state) {
+        final amount = int.tryParse(state.pathParameters['amount'] ?? '0')!;
+        final cryptoName = state.pathParameters['cryptoName']!;
+        final donationType = state.pathParameters['donationType']!;
+
+        return DonationConfirmationPage(
+          amount: amount,
+          cryptoName: cryptoName,
+          donationType: donationType,
+        );
+      },
+    ),
+    GoRoute(
+      path: '/admin/manage-crypto',
+      name: 'manageCrypto',
+      builder: (context, state) => const ManageCryptosPage(),
+    ),
+    GoRoute(
+      path: '/admin/create-testimony',
+      name: 'createTestimony',
+      builder: (context, state) => const CreateTestimonialPage(),
+    ),
+    GoRoute(
+      path: '/admin/delete-testimony',
+      name: 'deleteTestimony',
+      builder: (context, state) => const DeleteTestimony(),
+    ),
+  ],
+);

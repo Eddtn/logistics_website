@@ -1,23 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:logistics_website/onstants/appbar.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:logistics_website/onstants/customIcons.dart';
 import 'package:logistics_website/onstants/footer.dart';
 import 'package:logistics_website/src/features/aboutPage/widgets/aboutUsWidget.dart';
 import 'package:logistics_website/src/features/aboutPage/widgets/deliveryTeamSection.dart';
-import 'package:logistics_website/src/features/homescreen/widgets/animatebutton.dart';
 import 'package:logistics_website/src/features/homescreen/widgets/blogSection.dart';
 import 'package:logistics_website/src/features/homescreen/widgets/firsthomePage.dart';
-import 'package:logistics_website/src/features/homescreen/widgets/teamWidget.dart';
 import 'package:logistics_website/src/features/homescreen/widgets/testimonialWidget.dart';
-import 'package:logistics_website/src/features/price/widget/getaquotewidget.dart';
 import 'package:logistics_website/src/features/price/widget/pricing.dart';
 import 'package:logistics_website/src/features/price/widget/requestQuote.dart';
 import 'package:logistics_website/src/features/services/widget/chooseUs.dart';
 import 'package:logistics_website/src/features/services/widget/ourserviceWidget.dart';
-import 'package:logistics_website/src/features/services/widget/serviceWidget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
