@@ -1,107 +1,75 @@
-// import 'dart:async';
-// import 'package:supabase_flutter/supabase_flutter.dart';
-
-// class DeliveryService {
-//   final SupabaseClient _client = Supabase.instance.client;
-
-//   /// Stream all deliveries with realtime updates
-//   Stream<List<Map<String, dynamic>>> subscribeToAllDeliveries() {
-//     final controller = StreamController<List<Map<String, dynamic>>>();
-
-//     // Initial load
-//     _client.from('deliveries').select().then((data) {
-//       controller.add(List<Map<String, dynamic>>.from(data));
-//     });
-
-//     final channel = _client.channel('public:deliveries');
-
-//     channel.onPostgresChanges(
-//       event: PostgresChangeEvent.all,
-//       schema: 'public',
-//       table: 'deliveries',
-//       callback: (payload) async {
-//         final data = await _client.from('deliveries').select();
-//         controller.add(List<Map<String, dynamic>>.from(data));
-//       },
-//     );
-
-//     channel.subscribe();
-
-//     controller.onCancel = () {
-//       _client.removeChannel(channel);
-//     };
-
-//     return controller.stream;
-//   }
-
-//   /// Update delivery (used by admin)
-//   Future<void> updateDelivery(
-//     String trackingNumber,
-//     Map<String, dynamic> data,
-//   ) async {
-//     await _client
-//         .from('deliveries')
-//         .update(data)
-//         .eq('tracking_number', trackingNumber);
-//   }
-
-//    Future<void> createDelivery(Map<String, dynamic> delivery) async {
-//     final response = await _supabase.from('deliveries').insert(delivery);
-//     print(response);
-//   }
-
-// }
-
 import 'dart:async';
-import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:logistics_website/src/features/admin_page/delivery/model/delivery_model.dart';
+import 'package:logistics_website/src/service/network_service.dart';
 
 class DeliveryService {
-  final SupabaseClient _client = Supabase.instance.client;
+  final DeliveryNetworkService _network = DeliveryNetworkService();
 
-  /// Stream all deliveries with realtime updates
-  Stream<List<Map<String, dynamic>>> subscribeToAllDeliveries() {
-    final controller = StreamController<List<Map<String, dynamic>>>();
+  /// ✅ Add new delivery (via REST API)
+  Future<void> addDelivery(DeliveryModel delivery) async {
+    print("Delivery JSON: ${delivery.toMap()}");
 
-    // Initial load
-    _client.from('deliveries').select().then((data) {
-      controller.add(List<Map<String, dynamic>>.from(data));
-    });
+    try {
+      final data = delivery.toMap();
 
-    final channel = _client.channel('public:deliveries');
+      final response = await _network.postRequest(
+        'rest/v1/deliveries', // 👈 Full Supabase REST path
+        data,
+      );
 
-    channel.onPostgresChanges(
-      event: PostgresChangeEvent.all,
-      schema: 'public',
-      table: 'deliveries',
-      callback: (payload) async {
-        final data = await _client.from('deliveries').select();
-        controller.add(List<Map<String, dynamic>>.from(data));
-      },
-    );
-
-    channel.subscribe();
-
-    controller.onCancel = () {
-      _client.removeChannel(channel);
-    };
-
-    return controller.stream;
+      print("✅ Delivery added: $response");
+    } catch (e) {
+      print("❌ Error adding delivery: $e");
+      rethrow;
+    }
   }
 
-  /// Update delivery (used by admin)
+  /// ✅ Fetch all deliveries
+  Future<List<DeliveryModel>> fetchDeliveries() async {
+    try {
+      final response = await _network.getRequest('deliveries');
+      print('✅ Response from Supabase: $response');
+      if (response is List) {
+        return response
+            .map((e) => DeliveryModel.fromMap(e as Map<String, dynamic>))
+            .toList();
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print("❌ Error fetching deliveries: $e");
+      rethrow;
+    }
+  }
+
   Future<void> updateDelivery(
     String trackingNumber,
     Map<String, dynamic> data,
   ) async {
-    await _client
-        .from('deliveries')
-        .update(data)
-        .eq('tracking_number', trackingNumber);
+    try {
+      await _network.updateRequest(
+        'rest/v1/deliveries',
+        data,
+        matchColumn: 'trackingNumber', // 👈 match by trackingNumber
+        matchValue: trackingNumber,
+      );
+    } catch (e) {
+      print("❌ Error updating delivery: $e");
+      rethrow;
+    }
   }
 
-  /// Create new delivery record
-  Future<void> createDelivery(Map<String, dynamic> delivery) async {
-    final response = await _client.from('deliveries').insert(delivery);
-    print(response);
+  Future<void> deleteDelivery(String trackingNumber) async {
+    try {
+      await _network.deleteRequest(
+        'rest/v1/deliveries',
+        matchColumn: 'trackingNumber', // 👈 match by trackingNumber
+        matchValue: trackingNumber,
+      );
+    } catch (e) {
+      print("❌ Error deleting delivery: $e");
+      rethrow;
+    }
   }
 }

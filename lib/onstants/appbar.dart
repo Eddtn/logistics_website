@@ -3,7 +3,7 @@ import 'package:logistics_website/onstants/highlightedText.dart';
 import 'package:logistics_website/onstants/drop_menu_text.dart';
 import 'package:logistics_website/onstants/responsiveness.dart';
 import 'package:logistics_website/onstants/socialIcons.dart';
-import 'package:url_launcher/url_launcher.dart';
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class AppBarWidget extends StatefulWidget {

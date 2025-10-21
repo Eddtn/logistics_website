@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:logistics_website/src/features/admin_page/account_page/view/account_age.dart';
-import 'package:logistics_website/src/features/admin_page/addtracking/view/add_tracking_page.dart';
+import 'package:logistics_website/src/features/admin_page/delivery/view/addDeliveriespage.dart';
 import 'package:logistics_website/src/features/admin_page/admin_auth/view/logout_page.dart';
 import 'package:logistics_website/src/features/admin_page/settingspage/view/settings.dart';
-import 'package:logistics_website/src/features/admin_page/views/dashboard.dart';
+import 'package:logistics_website/src/features/admin_page/delivery/view/dashboard.dart';
 
 class AdminPanel extends StatelessWidget {
   const AdminPanel({super.key});
@@ -44,7 +44,7 @@ class AdminPanel extends StatelessWidget {
           physics: NeverScrollableScrollPhysics(),
           children: [
             DashboardPage(),
-            AddTrackingForm(),
+            AddDeliveriesPage(),
             AccountsPage(),
             SettingsPage(),
             LogoutPage(),
