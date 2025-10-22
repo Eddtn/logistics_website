@@ -21,17 +21,29 @@ class DeliveryNetworkService {
         )
         ..interceptors.add(
           InterceptorsWrapper(
+            // In the interceptor
             onRequest: (options, handler) async {
               SharedPreferences prefs = await SharedPreferences.getInstance();
               String? token = prefs.getString('supabase_token');
 
-              // ✅ Always include Authorization header (prefer saved token, fallback to anon key)
+              // PRIORITIZE saved token, fallback to anon ONLY if no token
               options.headers["Authorization"] = token != null
                   ? "Bearer $token"
-                  : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6ZXlteG5yZWp0amZtYWRmdXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1MjM1OTcsImV4cCI6MjA3NTA5OTU5N30.QpuUzEffmte3ZO9-6CMK4PwWFP9nBtFWJ-W0e5g91A0";
+                  : "Bearer ${options.headers['Authorization']?.toString().split(' ').last}";
 
               handler.next(options);
             },
+            // onRequest: (options, handler) async {
+            //   SharedPreferences prefs = await SharedPreferences.getInstance();
+            //   String? token = prefs.getString('supabase_token');
+
+            //   // ✅ Always include Authorization header (prefer saved token, fallback to anon key)
+            //   options.headers["Authorization"] = token != null
+            //       ? "Bearer $token"
+            //       : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6ZXlteG5yZWp0amZtYWRmdXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1MjM1OTcsImV4cCI6MjA3NTA5OTU5N30.QpuUzEffmte3ZO9-6CMK4PwWFP9nBtFWJ-W0e5g91A0";
+
+            //   handler.next(options);
+            // },
           ),
         );
 

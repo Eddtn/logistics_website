@@ -14,7 +14,7 @@ class DeliveryService {
       final data = delivery.toMap();
 
       final response = await _network.postRequest(
-        'rest/v1/deliveries', // 👈 Full Supabase REST path
+        'deliveries', // 👈 Full Supabase REST path
         data,
       );
 
@@ -28,7 +28,7 @@ class DeliveryService {
   /// ✅ Fetch all deliveries
   Future<List<DeliveryModel>> fetchDeliveries() async {
     try {
-      final response = await _network.getRequest('deliveries');
+      final response = await _network.getRequest('rest/v1/deliveries');
       print('✅ Response from Supabase: $response');
       if (response is List) {
         return response

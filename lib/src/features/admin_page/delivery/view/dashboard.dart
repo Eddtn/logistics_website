@@ -58,7 +58,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text("Update Status - ${delivery.trackingNumber}"),
+        title: Text("Update Status - ${delivery.tracking_number}"),
         content: StatefulBuilder(
           builder: (context, setState) => DropdownButtonFormField<String>(
             value: selectedStatus,
@@ -78,7 +78,7 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
             onPressed: () async {
               final success = await ref
                   .read(deliveryProvider.notifier)
-                  .updateDelivery(delivery.trackingNumber, {
+                  .updateDelivery(delivery.tracking_number, {
                     'status': selectedStatus,
                   });
 
@@ -106,67 +106,149 @@ class _DashboardPageState extends ConsumerState<DashboardPage> {
   Widget build(BuildContext context) {
     final deliveries = ref.watch(deliveryProvider);
 
+    // Inside build()
+    final asyncDeliveries = ref.watch(deliveryProvider);
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Admin Dashboard"), centerTitle: true),
+      appBar: AppBar(title: const Text("Admin Dashboard")),
       body: RefreshIndicator(
-        onRefresh: () async =>
-            ref.read(deliveryProvider.notifier).fetchDeliveries(),
-        child: deliveries.isEmpty
-            ? const Center(child: Text("No deliveries found."))
-            : SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: DataTable(
-                  headingRowColor: WidgetStateProperty.all(Colors.blue.shade50),
-                  border: TableBorder.all(color: Colors.grey.shade300),
-                  columns: const [
-                    DataColumn(label: Text("Sender")),
-                    DataColumn(label: Text("Receiver")),
-                    DataColumn(label: Text("Tracking #")),
-                    DataColumn(label: Text("Status")),
-                    DataColumn(label: Text("Destination")),
-                    DataColumn(label: Text("Actions")),
-                  ],
-                  rows: deliveries.map((delivery) {
-                    return DataRow(
-                      cells: [
-                        DataCell(Text(delivery.senderName)),
-                        DataCell(Text(delivery.receiverName)),
-                        DataCell(Text(delivery.trackingNumber)),
-                        DataCell(_statusChip(delivery.status)),
-                        DataCell(Text(delivery.destination)),
-                        DataCell(
-                          Row(
-                            children: [
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.edit,
-                                  color: Colors.blue,
-                                ),
-                                tooltip: "Edit Status",
-                                onPressed: () =>
-                                    _showEditStatusDialog(context, delivery),
-                              ),
-                              IconButton(
-                                icon: const Icon(
-                                  Icons.delete,
-                                  color: Colors.red,
-                                ),
-                                tooltip: "Delete Delivery",
-                                onPressed: () => _confirmDelete(
-                                  context,
-                                  delivery.trackingNumber,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    );
-                  }).toList(),
+        onRefresh: () => ref.read(deliveryProvider.notifier).fetchDeliveries(),
+        child: asyncDeliveries.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, _) => Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text("Error: $err"),
+                ElevatedButton(
+                  onPressed: () =>
+                      ref.read(deliveryProvider.notifier).fetchDeliveries(),
+                  child: const Text("Retry"),
                 ),
-              ),
+              ],
+            ),
+          ),
+          data: (deliveries) => deliveries.isEmpty
+              ? const Center(child: Text("No deliveries found"))
+              : SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: DataTable(
+                    headingRowColor: WidgetStateProperty.all(
+                      Colors.blue.shade50,
+                    ),
+                    border: TableBorder.all(color: Colors.grey.shade300),
+                    columns: const [
+                      DataColumn(label: Text("Sender")),
+                      DataColumn(label: Text("Receiver")),
+                      DataColumn(label: Text("Tracking #")),
+                      DataColumn(label: Text("Status")),
+                      DataColumn(label: Text("Destination")),
+                      DataColumn(label: Text("Actions")),
+                    ],
+                    rows: deliveries.map((delivery) {
+                      return DataRow(
+                        cells: [
+                          DataCell(Text(delivery.sender_name)),
+                          DataCell(Text(delivery.receiver_name)),
+                          DataCell(Text(delivery.tracking_number)),
+                          DataCell(_statusChip(delivery.status)),
+                          DataCell(Text(delivery.destination)),
+                          DataCell(
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.edit,
+                                    color: Colors.blue,
+                                  ),
+                                  tooltip: "Edit Status",
+                                  onPressed: () =>
+                                      _showEditStatusDialog(context, delivery),
+                                ),
+                                IconButton(
+                                  icon: const Icon(
+                                    Icons.delete,
+                                    color: Colors.red,
+                                  ),
+                                  tooltip: "Delete Delivery",
+                                  onPressed: () => _confirmDelete(
+                                    context,
+                                    delivery.tracking_number,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    }).toList(),
+                  ),
+                ),
+        ),
       ),
     );
+
+    // return Scaffold(
+    //   appBar: AppBar(title: const Text("Admin Dashboard"), centerTitle: true),
+    //   body: RefreshIndicator(
+    //     onRefresh: () async =>
+    //         ref.read(deliveryProvider.notifier).fetchDeliveries(),
+    //     child: deliveries.isEmpty
+    //         ? const Center(child: Text("No deliveries found."))
+    //         : SingleChildScrollView(
+    //             scrollDirection: Axis.horizontal,
+    //             child: DataTable(
+    //               headingRowColor: WidgetStateProperty.all(Colors.blue.shade50),
+    //               border: TableBorder.all(color: Colors.grey.shade300),
+    //               columns: const [
+    //                 DataColumn(label: Text("Sender")),
+    //                 DataColumn(label: Text("Receiver")),
+    //                 DataColumn(label: Text("Tracking #")),
+    //                 DataColumn(label: Text("Status")),
+    //                 DataColumn(label: Text("Destination")),
+    //                 DataColumn(label: Text("Actions")),
+    //               ],
+    //               rows: deliveries.map((delivery) {
+    //                 return DataRow(
+    //                   cells: [
+    //                     DataCell(Text(delivery.senderName)),
+    //                     DataCell(Text(delivery.receiverName)),
+    //                     DataCell(Text(delivery.trackingNumber)),
+    //                     DataCell(_statusChip(delivery.status)),
+    //                     DataCell(Text(delivery.destination)),
+    //                     DataCell(
+    //                       Row(
+    //                         children: [
+    //                           IconButton(
+    //                             icon: const Icon(
+    //                               Icons.edit,
+    //                               color: Colors.blue,
+    //                             ),
+    //                             tooltip: "Edit Status",
+    //                             onPressed: () =>
+    //                                 _showEditStatusDialog(context, delivery),
+    //                           ),
+    //                           IconButton(
+    //                             icon: const Icon(
+    //                               Icons.delete,
+    //                               color: Colors.red,
+    //                             ),
+    //                             tooltip: "Delete Delivery",
+    //                             onPressed: () => _confirmDelete(
+    //                               context,
+    //                               delivery.trackingNumber,
+    //                             ),
+    //                           ),
+    //                         ],
+    //                       ),
+    //                     ),
+    //                   ],
+    //                 );
+    //               }).toList(),
+    //             ),
+    //           ),
+    //   ),
+    // );
   }
 
   static Widget _statusChip(String status) {

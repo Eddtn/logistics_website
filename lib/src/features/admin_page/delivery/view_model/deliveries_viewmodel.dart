@@ -1,46 +1,49 @@
 // import 'package:flutter_riverpod/flutter_riverpod.dart';
 // import 'package:logistics_website/src/features/admin_page/delivery/model/delivery_model.dart';
-// import 'package:logistics_website/src/service/network_service.dart'; // your Dio-based DeliveryNetworkService
+// import 'package:logistics_website/src/service/network_service.dart';
 
 // /// ✅ Enum to track UI state
 // enum DeliveryListState { idle, loading, success, error }
 
 // /// ✅ Notifier Class
 // class DeliveryNotifier extends StateNotifier<List<DeliveryModel>> {
-//   DeliveryNotifier(this.ref) : super([]);
+//   DeliveryNotifier() : super([]);
 
 //   final DeliveryNetworkService _deliveryService = DeliveryNetworkService();
-//   final Ref ref;
+//   // final Ref ref;
 
-//   /// Fetch all deliveries
+//   /// Fetch all deliveries from Supabase
 //   Future<void> fetchDeliveries() async {
-//     final stateController = ref.read(deliveryStateProvider.notifier);
-//     try {
-//       stateController.state = DeliveryListState.loading;
+//     // final stateController = ref.read(deliveryStateProvider.notifier);
 
-//       final response = await _deliveryService.getRequest("deliveries");
+//     try {
+//       // stateController.state = DeliveryListState.loading;
+
+//       // 👇 Corrected endpoint
+//       final response = await _deliveryService.getRequest('rest/v1/deliveries');
 
 //       final deliveries = (response as List)
 //           .map((e) => DeliveryModel.fromMap(e as Map<String, dynamic>))
 //           .toList();
 
 //       state = deliveries;
-//       stateController.state = DeliveryListState.success;
+//       // stateController.state = DeliveryListState.success;
 //     } catch (e, stack) {
 //       print('❌ Error fetching deliveries: $e\n$stack');
-//       stateController.state = DeliveryListState.error;
+//       // stateController.state = DeliveryListState.error;
 //     }
 //   }
 
-//   /// Delete a delivery by ID
-//   Future<bool> deleteDelivery(String id) async {
+//   /// Delete delivery by tracking number
+//   Future<bool> deleteDelivery(String trackingNumber) async {
 //     try {
 //       await _deliveryService.deleteRequest(
-//         "deliveries",
-//         matchColumn: "id",
-//         matchValue: id,
+//         'rest/v1/deliveries',
+//         matchColumn: 'trackingNumber', // 👈 fixed
+//         matchValue: trackingNumber,
 //       );
-//       await fetchDeliveries(); // refresh after delete
+
+//       await fetchDeliveries(); // refresh list
 //       return true;
 //     } catch (e) {
 //       print('❌ Error deleting delivery: $e');
@@ -49,16 +52,19 @@
 //   }
 
 //   /// Update delivery details
-//   Future<bool> updateDelivery(String id, Map<String, dynamic> updates) async {
+//   Future<bool> updateDelivery(
+//     String trackingNumber,
+//     Map<String, dynamic> updates,
+//   ) async {
 //     try {
 //       await _deliveryService.updateRequest(
-//         "deliveries",
+//         'rest/v1/deliveries',
 //         updates,
-//         matchColumn: "id",
-//         matchValue: id,
+//         matchColumn: 'trackingNumber', // 👈 fixed
+//         matchValue: trackingNumber,
 //       );
 
-//       await fetchDeliveries(); // refresh after update
+//       await fetchDeliveries(); // refresh list
 //       return true;
 //     } catch (e) {
 //       print('❌ Error updating delivery: $e');
@@ -73,91 +79,76 @@
 // );
 
 // final deliveryProvider =
-//     StateNotifierProvider<DeliveryNotifier, List<DeliveryModel>>((ref) {
-//       return DeliveryNotifier(ref);
-//     });
+//     StateNotifierProvider<DeliveryNotifier, List<DeliveryModel>>(
+//       (ref) => DeliveryNotifier(),
+//     );
 
+// src/features/admin_page/delivery/view_model/deliveries_viewmodel.dart
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:logistics_website/src/features/admin_page/delivery/model/delivery_model.dart';
 import 'package:logistics_website/src/service/network_service.dart';
+import '../model/delivery_model.dart';
 
-/// ✅ Enum to track UI state
-enum DeliveryListState { idle, loading, success, error }
+class DeliveryNotifier extends StateNotifier<AsyncValue<List<DeliveryModel>>> {
+  DeliveryNotifier() : super(const AsyncLoading()) {
+    fetchDeliveries(); // Auto-load
+  }
 
-/// ✅ Notifier Class
-class DeliveryNotifier extends StateNotifier<List<DeliveryModel>> {
-  DeliveryNotifier() : super([]);
+  final DeliveryNetworkService _service = DeliveryNetworkService();
 
-  final DeliveryNetworkService _deliveryService = DeliveryNetworkService();
-  // final Ref ref;
-
-  /// Fetch all deliveries from Supabase
   Future<void> fetchDeliveries() async {
-    // final stateController = ref.read(deliveryStateProvider.notifier);
-
+    state = const AsyncLoading();
     try {
-      // stateController.state = DeliveryListState.loading;
-
-      // 👇 Corrected endpoint
-      final response = await _deliveryService.getRequest('rest/v1/deliveries');
+      // CORRECT PATH: Just 'deliveries' — baseUrl already has /rest/v1
+      final response = await _service.getRequest('deliveries');
 
       final deliveries = (response as List)
           .map((e) => DeliveryModel.fromMap(e as Map<String, dynamic>))
           .toList();
 
-      state = deliveries;
-      // stateController.state = DeliveryListState.success;
+      state = AsyncData(deliveries);
     } catch (e, stack) {
-      print('❌ Error fetching deliveries: $e\n$stack');
-      // stateController.state = DeliveryListState.error;
+      state = AsyncError(e, stack);
+      print('Error fetching: $e');
     }
   }
 
-  /// Delete delivery by tracking number
   Future<bool> deleteDelivery(String trackingNumber) async {
     try {
-      await _deliveryService.deleteRequest(
-        'rest/v1/deliveries',
-        matchColumn: 'trackingNumber', // 👈 fixed
+      await _service.deleteRequest(
+        'deliveries',
+        matchColumn: 'tracking_number', // Match DB column
         matchValue: trackingNumber,
       );
-
-      await fetchDeliveries(); // refresh list
+      await fetchDeliveries();
       return true;
     } catch (e) {
-      print('❌ Error deleting delivery: $e');
+      print('Delete error: $e');
       return false;
     }
   }
 
-  /// Update delivery details
   Future<bool> updateDelivery(
     String trackingNumber,
     Map<String, dynamic> updates,
   ) async {
     try {
-      await _deliveryService.updateRequest(
-        'rest/v1/deliveries',
+      await _service.updateRequest(
+        'deliveries',
         updates,
-        matchColumn: 'trackingNumber', // 👈 fixed
+        matchColumn: 'tracking_number',
         matchValue: trackingNumber,
       );
-
-      await fetchDeliveries(); // refresh list
+      await fetchDeliveries();
       return true;
     } catch (e) {
-      print('❌ Error updating delivery: $e');
+      print('Update error: $e');
       return false;
     }
   }
 }
 
-/// ✅ Providers
-final deliveryStateProvider = StateProvider<DeliveryListState>(
-  (ref) => DeliveryListState.idle,
-);
-
+// PROVIDER
 final deliveryProvider =
-    StateNotifierProvider<DeliveryNotifier, List<DeliveryModel>>(
+    StateNotifierProvider<DeliveryNotifier, AsyncValue<List<DeliveryModel>>>(
       (ref) => DeliveryNotifier(),
     );

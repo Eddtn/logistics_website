@@ -149,19 +149,19 @@ class AddDeliveryViewModel extends StateNotifier<AddDeliveryState> {
 
       // ✅ Create delivery object
       final delivery = DeliveryModel(
-        trackingNumber: "TRK-${DateTime.now().millisecondsSinceEpoch}",
-        senderName: senderName,
-        receiverName: receiverName,
-        dispatchLocation: dispatchLocation,
+        tracking_number: "TRK-${DateTime.now().millisecondsSinceEpoch}",
+        sender_name: senderName,
+        receiver_name: receiverName,
+        dispatch_location: dispatchLocation,
         destination: destination,
-        amountDue: amountDue,
-        dispatchDetails: dispatchDetails,
-        estimatedDelivery: estimatedDelivery,
+        amount_due: amountDue,
+        dispatch_details: dispatchDetails,
+        estimated_delivery: estimatedDelivery,
         shipment: shipment,
         quantity: quantity,
-        deliveryTime: deliveryTime,
+        delivery_time: deliveryTime,
         status: status,
-        paymentMode: paymentMode,
+        payment_mode: paymentMode,
       );
 
       // ✅ Save to backend via the service
