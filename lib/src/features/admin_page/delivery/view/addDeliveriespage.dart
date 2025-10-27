@@ -156,9 +156,11 @@ class _AddTrackingPageState extends ConsumerState<AddDeliveriesPage> {
     _textField("Sender Name", senderName),
     _textField("Dispatch Location", dispatchLocation),
     _dropdown("Status", [
-      "Pending",
+      "Order Placed"
+          "Dispatched",
       "In Transit",
-      "Delivered",
+      "Out for Delivery"
+          "Delivered",
     ], (val) => setState(() => status = val)),
     _dropdown("Payment Mode", [
       "Cash",

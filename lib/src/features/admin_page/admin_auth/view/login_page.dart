@@ -143,10 +143,18 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                                     //   // "/admin", a
 
                                     // );
-                                    Navigator.of(context).push(
+                                    // Navigator.of(context).pushAndRemoveUntil(
+                                    //   MaterialPageRoute(
+                                    //     builder: (context) => AdminPanel(),
+                                    //   ),
+                                    // );
+
+                                    Navigator.of(context).pushAndRemoveUntil(
                                       MaterialPageRoute(
                                         builder: (context) => AdminPanel(),
-                                      ),
+                                      ), // The new route to push
+                                      (Route<dynamic> route) =>
+                                          false, // Predicate to remove previous routes
                                     );
                                   } else if (mounted &&
                                       latestState.error != null) {

@@ -1,0 +1,26 @@
+{
+  "appName": "لوجي تراك",
+  "trackYourPackage": "تتبع شحنتك",
+  "enterTrackingNumber": "أدخل رقم التتبع",
+  "trackNow": "تتبع الآن",
+  "trackingNumber": "رقم التتبع",
+  "status": "الحالة",
+  "sender": "المرسل",
+  "receiver": "المستلم",
+  "origin": "المنشأ",
+  "destination": "الوجهة",
+  "estimatedDelivery": "التسليم المتوقع",
+  "journey": "الرحلة",
+  "downloadReceipt": "تحميل الإيصال",
+  "adminDashboard": "AdminDashboard",
+  "dashboard": "Dashboard",
+  "addDelivery": "Add Delivery",
+  "accounts": "Accounts",
+  "settings": "Settings",
+  "logout": "Logout",
+  "search": "Search",
+  "notifications": "Notifications",
+  "@@locale": "ar"
+  
+  
+}

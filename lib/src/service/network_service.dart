@@ -33,27 +33,59 @@ class DeliveryNetworkService {
 
               handler.next(options);
             },
-            // onRequest: (options, handler) async {
-            //   SharedPreferences prefs = await SharedPreferences.getInstance();
-            //   String? token = prefs.getString('supabase_token');
-
-            //   // ✅ Always include Authorization header (prefer saved token, fallback to anon key)
-            //   options.headers["Authorization"] = token != null
-            //       ? "Bearer $token"
-            //       : "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imt6ZXlteG5yZWp0amZtYWRmdXJiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTk1MjM1OTcsImV4cCI6MjA3NTA5OTU5N30.QpuUzEffmte3ZO9-6CMK4PwWFP9nBtFWJ-W0e5g91A0";
-
-            //   handler.next(options);
-            // },
           ),
         );
 
   /// ✅ GET Request
+  // Future<dynamic> getRequest(
+  //   String table, {
+  //   Map<String, dynamic>? queryParams,
+  // }) async {
+  //   try {
+  //     final response = await _dio.get('/$table', queryParameters: queryParams);
+  //     return _handleResponse(response);
+  //   } on DioException catch (e) {
+  //     throw Exception(_handleDioError(e));
+  //   }
+  // }
+
   Future<dynamic> getRequest(
     String table, {
     Map<String, dynamic>? queryParams,
+    String? singleBy, // column name for .eq. filter
+    dynamic value, // value for the .eq. filter
   }) async {
     try {
-      final response = await _dio.get('/$table', queryParameters: queryParams);
+      // ------------------------------------------------------------------
+      // 1. Build the PostgREST query map
+      // ------------------------------------------------------------------
+      final Map<String, dynamic> pgParams = {};
+
+      // ---- a) normal filters (status=eq.in transit, etc.) ----------------
+      if (queryParams != null) {
+        queryParams.forEach((key, val) {
+          // If the caller already passed "eq.xxx" we keep it unchanged
+          if (val is String && val.startsWith('eq.')) {
+            pgParams[key] = val;
+          } else {
+            pgParams[key] = 'eq.$val';
+          }
+        });
+      }
+
+      // ---- b) single-row shortcut (tracking_number=eq.TRK123) ------------
+      if (singleBy != null && value != null) {
+        pgParams[singleBy] = 'eq.$value';
+      }
+
+      // ------------------------------------------------------------------
+      // 2. Execute request
+      // ------------------------------------------------------------------
+      final response = await _dio.get(
+        '/$table',
+        queryParameters: pgParams.isNotEmpty ? pgParams : null,
+      );
+
       return _handleResponse(response);
     } on DioException catch (e) {
       throw Exception(_handleDioError(e));

@@ -2,9 +2,14 @@ import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:logistics_website/core/appp_theme.dart';
+import 'package:logistics_website/core/theme_switch.dart';
 
 import 'package:logistics_website/src/features/admin_page/admin_auth/view/login_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'core/widgets/language_switchers.dart';
+import 'l10n/localization.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,21 +30,35 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeModeProvider);
+
+    final appLocale = ref.watch(localeProvider);
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      locale: DevicePreview.locale(context),
+      // locale: DevicePreview.locale(context),
       builder: DevicePreview.appBuilder,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
-      home: LoginPage(),
+
+      theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
+      themeMode: isDark ? ThemeMode.dark : ThemeMode.light,
+      locale: DevicePreview.locale(context) ?? appLocale,
+      supportedLocales: Localization.supportedLocales,
+      localizationsDelegates: Localization.localizationsDelegates,
+      // theme:
+      //  ThemeData(
+      //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+      // ),
+      home:
+          //  HomeScreen(),
+          //  TrackingDetailsPage(trackingNumber: ''),
+          LoginPage(),
       // TrackingDetailsPage(trackingId: '', trackingNumber: ''),
       // AdminPanel(),
       // const LatestBlogWidget(),

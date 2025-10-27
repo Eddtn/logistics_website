@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:logistics_website/core/theme_switch.dart';
 import 'package:logistics_website/src/features/admin_page/account_page/view/account_age.dart';
 import 'package:logistics_website/src/features/admin_page/delivery/view/addDeliveriespage.dart';
 import 'package:logistics_website/src/features/admin_page/admin_auth/view/logout_page.dart';
@@ -28,6 +29,7 @@ class AdminPanel extends StatelessWidget {
               ),
             ),
           ],
+          leading: ThemeSwitch(),
           bottom: TabBar(
             isScrollable: !isWide, // scrollable on mobile, fixed on desktop
             indicatorColor: Colors.white,

@@ -1,642 +1,307 @@
-// import 'package:flutter/material.dart';
-// import 'package:printing/printing.dart';
-// import 'package:pdf/pdf.dart';
-// import 'package:pdf/widgets.dart' as pw;
-
-// class TrackingDetailsPage extends StatelessWidget {
-//   final String trackingId;
-//   final String trackingNumber;
-
-//   const TrackingDetailsPage({
-//     super.key,
-//     required this.trackingId,
-//     required this.trackingNumber,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Tracking Details"),
-//         backgroundColor: Colors.blueAccent,
-//       ),
-//       body: SingleChildScrollView(
-//         padding: const EdgeInsets.all(16),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             // 🔹 Tracking Header
-//             Card(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(16),
-//               ),
-//               elevation: 4,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Row(
-//                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                   children: [
-//                     Text(
-//                       "Tracking ID: $trackingId",
-//                       style: const TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                     Chip(
-//                       label: const Text(
-//                         "In Transit",
-//                         style: TextStyle(color: Colors.white),
-//                       ),
-//                       backgroundColor: Colors.orange,
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // 🔹 Package Summary
-//             Card(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(16),
-//               ),
-//               elevation: 4,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: const [
-//                     Text(
-//                       "Package Summary",
-//                       style: TextStyle(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                     Divider(),
-//                     ListTile(
-//                       leading: Icon(Icons.person),
-//                       title: Text("Sender: John Doe"),
-//                       subtitle: Text("Lagos, Nigeria"),
-//                     ),
-//                     ListTile(
-//                       leading: Icon(Icons.location_on),
-//                       title: Text("Receiver: Alice Smith"),
-//                       subtitle: Text("Abuja, Nigeria"),
-//                     ),
-//                     ListTile(
-//                       leading: Icon(Icons.inventory),
-//                       title: Text("Package: Electronics"),
-//                       subtitle: Text("Quantity: 2, Weight: 5kg"),
-//                     ),
-//                     ListTile(
-//                       leading: Icon(Icons.payment),
-//                       title: Text("Payment Status: Amount Due"),
-//                       subtitle: Text("₦15,000 - Cash on Delivery"),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // 🔹 Horizontal Progress Bar
-//             Card(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(16),
-//               ),
-//               elevation: 4,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: [
-//                     const Text(
-//                       "Delivery Progress",
-//                       style: TextStyle(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                     const Divider(),
-//                     Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         _buildStep("Registered", true),
-//                         _buildStep("Dispatched", true),
-//                         _buildStep("In Transit", true),
-//                         _buildStep("Out for Delivery", false),
-//                         _buildStep("Delivered", false),
-//                       ],
-//                     ),
-//                     const SizedBox(height: 10),
-//                     const LinearProgressIndicator(
-//                       value: 0.6, // 60% progress (In Transit)
-//                       backgroundColor: Colors.grey,
-//                       valueColor: AlwaysStoppedAnimation(Colors.blueAccent),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // 🔹 Estimated Delivery
-//             Card(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(16),
-//               ),
-//               elevation: 4,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: const ListTile(
-//                   leading: Icon(Icons.calendar_today, color: Colors.blue),
-//                   title: Text("Estimated Delivery"),
-//                   subtitle: Text("Sept 30, 2025 - Between 10AM - 3PM"),
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // 🔹 Customer Support
-//             Card(
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: BorderRadius.circular(16),
-//               ),
-//               elevation: 4,
-//               child: Padding(
-//                 padding: const EdgeInsets.all(16),
-//                 child: Column(
-//                   crossAxisAlignment: CrossAxisAlignment.start,
-//                   children: const [
-//                     Text(
-//                       "Customer Support",
-//                       style: TextStyle(
-//                         fontSize: 16,
-//                         fontWeight: FontWeight.bold,
-//                       ),
-//                     ),
-//                     Divider(),
-//                     ListTile(
-//                       leading: Icon(Icons.phone, color: Colors.green),
-//                       title: Text("Call Us"),
-//                       subtitle: Text("+234 800 123 4567"),
-//                     ),
-//                     ListTile(
-//                       leading: Icon(Icons.email, color: Colors.orange),
-//                       title: Text("Email"),
-//                       subtitle: Text("support@logistics.com"),
-//                     ),
-//                     ListTile(
-//                       leading: Icon(Icons.chat, color: Colors.blue),
-//                       title: Text("Live Chat"),
-//                       subtitle: Text("Available 24/7"),
-//                     ),
-//                   ],
-//                 ),
-//               ),
-//             ),
-//             const SizedBox(height: 20),
-
-//             // 🔹 Download / Print
-//             // Center(
-//             //   child: ElevatedButton.icon(
-//             //     style: ElevatedButton.styleFrom(
-//             //       backgroundColor: Colors.blueAccent,
-//             //       padding: const EdgeInsets.symmetric(
-//             //         horizontal: 24,
-//             //         vertical: 14,
-//             //       ),
-//             //       shape: RoundedRectangleBorder(
-//             //         borderRadius: BorderRadius.circular(12),
-//             //       ),
-//             //     ),
-//             //     icon: const Icon(Icons.download, color: Colors.white),
-//             //     label: const Text(
-//             //       "Download Receipt",
-//             //       style: TextStyle(color: Colors.white),
-//             //     ),
-//             //     onPressed: () {
-//             //       // TODO: implement receipt download / print
-//             //       ScaffoldMessenger.of(context).showSnackBar(
-//             //         const SnackBar(content: Text("Receipt Downloaded")),
-//             //       );
-//             //     },
-//             //   ),
-//             // ),
-//             Center(
-//               child: ElevatedButton.icon(
-//                 style: ElevatedButton.styleFrom(
-//                   backgroundColor: Colors.blueAccent,
-//                   padding: const EdgeInsets.symmetric(
-//                     horizontal: 24,
-//                     vertical: 14,
-//                   ),
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                 ),
-//                 icon: const Icon(Icons.download, color: Colors.white),
-//                 label: const Text(
-//                   "Download Receipt",
-//                   style: TextStyle(color: Colors.white),
-//                 ),
-//                 onPressed: () async {
-//                   final pdf = pw.Document();
-
-//                   pdf.addPage(
-//                     pw.Page(
-//                       build: (pw.Context context) => pw.Column(
-//                         crossAxisAlignment: pw.CrossAxisAlignment.start,
-//                         children: [
-//                           pw.Text(
-//                             "Logistics Company",
-//                             style: pw.TextStyle(
-//                               fontSize: 24,
-//                               fontWeight: pw.FontWeight.bold,
-//                             ),
-//                           ),
-//                           pw.SizedBox(height: 10),
-//                           pw.Text("Tracking Receipt"),
-//                           pw.Divider(),
-
-//                           pw.Text("Tracking Number: $trackingNumber"),
-//                           pw.Text("Status: In Transit"),
-//                           pw.Text("Dispatch: Lagos, Nigeria"),
-//                           pw.Text("Destination: New York, USA"),
-//                           pw.Text("Shipment Date: 2025-09-30"),
-//                           pw.Text("Estimated Delivery: 2025-10-10"),
-//                           pw.SizedBox(height: 10),
-
-//                           pw.Text("Package: Electronics (3 pcs)"),
-//                           pw.Text("Payment Mode: Prepaid"),
-//                           pw.Text("Amount Paid: \$150.00"),
-//                           pw.SizedBox(height: 20),
-
-//                           pw.Text("Customer Support"),
-//                           pw.Text("support@logistics.com | +1 555 123 456"),
-//                         ],
-//                       ),
-//                     ),
-//                   );
-
-//                   // Preview / print
-//                   await Printing.layoutPdf(
-//                     onLayout: (PdfPageFormat format) async => pdf.save(),
-//                   );
-//                 },
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget _buildStep(String label, bool done) {
-//     return Column(
-//       children: [
-//         Icon(
-//           done ? Icons.check_circle : Icons.radio_button_unchecked,
-//           color: done ? Colors.green : Colors.grey,
-//         ),
-//         const SizedBox(height: 4),
-//         Text(
-//           label,
-//           style: TextStyle(
-//             fontSize: 12,
-//             fontWeight: FontWeight.w500,
-//             color: done ? Colors.green : Colors.grey,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// import 'package:flutter/material.dart';
-// import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:logistics_website/src/features/trackingPage/view_model/tracking_viewmodel.dart';
-// import 'package:printing/printing.dart';
-// import 'package:pdf/pdf.dart';
-// import 'package:pdf/widgets.dart' as pw;
-
-// class TrackingDetailsPage extends ConsumerWidget {
-//   final String trackingId;
-//   final String trackingNumber;
-
-//   const TrackingDetailsPage({
-//     super.key,
-//     required this.trackingId,
-//     required this.trackingNumber,
-//   });
-
-//   @override
-//   Widget build(BuildContext context, WidgetRef ref) {
-//     final trackingAsync = ref.watch(trackingProvider(trackingNumber));
-
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: const Text("Tracking Details"),
-//         backgroundColor: Colors.blueAccent,
-//       ),
-//       body: trackingAsync.when(
-//         data: (delivery) {
-//           if (delivery == null || delivery.isEmpty) {
-//             return const Center(child: Text("No delivery data found."));
-//           }
-
-//           final status = delivery['status'] ?? "Unknown";
-//           final sender = delivery['sender'] ?? "N/A";
-//           final receiver = delivery['receiver'] ?? "N/A";
-//           final origin = delivery['origin'] ?? "N/A";
-//           final destination = delivery['destination'] ?? "N/A";
-//           final paymentStatus = delivery['payment_status'] ?? "Pending";
-//           final amount = delivery['amount'] ?? "0";
-//           final estimatedDate = delivery['estimated_date'] ?? "N/A";
-
-//           return SingleChildScrollView(
-//             padding: const EdgeInsets.all(16),
-//             child: Column(
-//               crossAxisAlignment: CrossAxisAlignment.start,
-//               children: [
-//                 // 🔹 Tracking Header
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16),
-//                   ),
-//                   elevation: 4,
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(16),
-//                     child: Row(
-//                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-//                       children: [
-//                         Text(
-//                           "Tracking ID: $trackingId",
-//                           style: const TextStyle(
-//                             fontSize: 18,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                         Chip(
-//                           label: Text(
-//                             status,
-//                             style: const TextStyle(color: Colors.white),
-//                           ),
-//                           backgroundColor: _getStatusColor(status),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 20),
-
-//                 // 🔹 Package Summary
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16),
-//                   ),
-//                   elevation: 4,
-//                   child: Padding(
-//                     padding: const EdgeInsets.all(16),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         const Text(
-//                           "Package Summary",
-//                           style: TextStyle(
-//                             fontSize: 16,
-//                             fontWeight: FontWeight.bold,
-//                           ),
-//                         ),
-//                         const Divider(),
-//                         ListTile(
-//                           leading: const Icon(Icons.person),
-//                           title: Text("Sender: $sender"),
-//                           subtitle: Text(origin),
-//                         ),
-//                         ListTile(
-//                           leading: const Icon(Icons.location_on),
-//                           title: Text("Receiver: $receiver"),
-//                           subtitle: Text(destination),
-//                         ),
-//                         ListTile(
-//                           leading: const Icon(Icons.payment),
-//                           title: Text("Payment: $paymentStatus"),
-//                           subtitle: Text("₦$amount"),
-//                         ),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 20),
-
-//                 // 🔹 Estimated Delivery
-//                 Card(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(16),
-//                   ),
-//                   elevation: 4,
-//                   child: ListTile(
-//                     leading: const Icon(
-//                       Icons.calendar_today,
-//                       color: Colors.blue,
-//                     ),
-//                     title: const Text("Estimated Delivery"),
-//                     subtitle: Text(estimatedDate),
-//                   ),
-//                 ),
-//                 const SizedBox(height: 20),
-
-//                 // 🔹 Download Receipt Button
-//                 Center(
-//                   child: ElevatedButton.icon(
-//                     style: ElevatedButton.styleFrom(
-//                       backgroundColor: Colors.blueAccent,
-//                       padding: const EdgeInsets.symmetric(
-//                         horizontal: 24,
-//                         vertical: 14,
-//                       ),
-//                       shape: RoundedRectangleBorder(
-//                         borderRadius: BorderRadius.circular(12),
-//                       ),
-//                     ),
-//                     icon: const Icon(Icons.download, color: Colors.white),
-//                     label: const Text(
-//                       "Download Receipt",
-//                       style: TextStyle(color: Colors.white),
-//                     ),
-//                     onPressed: () async {
-//                       final pdf = pw.Document();
-//                       pdf.addPage(
-//                         pw.Page(
-//                           build: (pw.Context context) => pw.Column(
-//                             crossAxisAlignment: pw.CrossAxisAlignment.start,
-//                             children: [
-//                               pw.Text("Tracking Number: $trackingNumber"),
-//                               pw.Text("Status: $status"),
-//                               pw.Text("Sender: $sender"),
-//                               pw.Text("Receiver: $receiver"),
-//                               pw.Text("Amount: ₦$amount"),
-//                             ],
-//                           ),
-//                         ),
-//                       );
-
-//                       await Printing.layoutPdf(
-//                         onLayout: (PdfPageFormat format) async => pdf.save(),
-//                       );
-//                     },
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           );
-//         },
-//         loading: () => const Center(child: CircularProgressIndicator()),
-//         error: (err, _) => Center(child: Text("Error: $err")),
-//       ),
-//     );
-//   }
-
-//   Color _getStatusColor(String status) {
-//     switch (status.toLowerCase()) {
-//       case "delivered":
-//         return Colors.green;
-//       case "in transit":
-//         return Colors.orange;
-//       case "dispatched":
-//         return Colors.blue;
-//       default:
-//         return Colors.grey;
-//     }
-//   }
-// }
-
+// TRK-1761095332206
+// src/features/trackingPage/view/tracking_detail_page.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logistics_website/src/features/trackingPage/view_model/tracking_viewmodel.dart';
+import 'package:logistics_website/src/features/trackingPage/model/tracking_model.dart';
 import 'package:printing/printing.dart';
 import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
+import 'package:supabase_flutter/supabase_flutter.dart';
 
-class TrackingDetailsPage extends ConsumerWidget {
-  final String trackingNumber;
+class TrackingDetailPage extends ConsumerStatefulWidget {
+  final String tracking_number;
 
-  const TrackingDetailsPage({super.key, required this.trackingNumber});
+  const TrackingDetailPage({super.key, required this.tracking_number});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final trackingAsync = ref.watch(trackingProvider(trackingNumber));
+  ConsumerState<TrackingDetailPage> createState() => _TrackingDetailPageState();
+}
+
+class _TrackingDetailPageState extends ConsumerState<TrackingDetailPage> {
+  late final String _trackingNumber;
+
+  @override
+  void initState() {
+    super.initState();
+    _trackingNumber = widget.tracking_number;
+  }
+
+  Future<void> _refresh() async {
+    await ref.read(trackingProvider(_trackingNumber).notifier).refresh();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final trackingAsync = ref.watch(trackingProvider(_trackingNumber));
+    // final trackingAsync = ref.watch(trackingProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: const Text("Tracking Details"),
         backgroundColor: Colors.blueAccent,
+        foregroundColor: Colors.white,
       ),
-      body: trackingAsync.when(
-        data: (tracking) {
-          if (tracking == null) {
-            return const Center(child: Text("No delivery data found."));
-          }
-
-          return SingleChildScrollView(
-            padding: const EdgeInsets.all(16),
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: trackingAsync.when(
+          loading: () => const Center(child: CircularProgressIndicator()),
+          error: (err, _) => Center(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                _headerCard(tracking),
-                const SizedBox(height: 20),
-                _packageSummary(tracking),
-                const SizedBox(height: 20),
-                _estimatedDeliveryCard(tracking),
-                const SizedBox(height: 20),
-                _downloadReceiptButton(tracking),
+                const Icon(Icons.error, size: 48, color: Colors.red),
+                const SizedBox(height: 16),
+                Text("Error: $err"),
+                const SizedBox(height: 16),
+                ElevatedButton(onPressed: _refresh, child: const Text("Retry")),
               ],
             ),
-          );
-        },
-        loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, _) => Center(child: Text("Error: $err")),
-      ),
-    );
-  }
-
-  Widget _headerCard(dynamic tracking) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Tracking No: ${tracking.trackingNumber}",
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            Chip(
-              label: Text(
-                tracking.status,
-                style: const TextStyle(color: Colors.white),
-              ),
-              backgroundColor: _getStatusColor(tracking.status),
-            ),
-          ],
+          ),
+          data: (tracking) {
+            if (tracking == null) {
+              return const Center(
+                child: Text(
+                  "No delivery found.",
+                  style: TextStyle(fontSize: 16),
+                ),
+              );
+            }
+            return _buildSuccess(tracking); // Now works!
+          },
         ),
       ),
     );
   }
 
-  Widget _packageSummary(dynamic tracking) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              "Package Summary",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const Divider(),
-            ListTile(
-              leading: const Icon(Icons.person),
-              title: Text("Sender: ${tracking.senderName}"),
-              subtitle: Text(tracking.origin),
-            ),
-            ListTile(
-              leading: const Icon(Icons.location_on),
-              title: Text("Receiver: ${tracking.receiverName}"),
-              subtitle: Text(tracking.destination),
-            ),
-            ListTile(
-              leading: const Icon(Icons.payment),
-              title: Text("Payment: ${tracking.paymentStatus}"),
-              subtitle: Text("₦${tracking.amount}"),
-            ),
-          ],
-        ),
+  Widget _buildSuccess(TrackingModel tracking) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _headerCard(tracking),
+          const SizedBox(height: 20),
+          // _trackingTimeline(tracking),
+          // const SizedBox(height: 20),
+          _packageSummary(tracking),
+          const SizedBox(height: 20),
+          _deliveryInfo(tracking),
+          const SizedBox(height: 20),
+          _downloadReceiptButton(tracking),
+        ],
       ),
     );
   }
 
-  Widget _estimatedDeliveryCard(dynamic tracking) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
-      elevation: 4,
-      child: ListTile(
-        leading: const Icon(Icons.calendar_today, color: Colors.blue),
-        title: const Text("Estimated Delivery"),
-        subtitle: Text(tracking.estimatedDate),
-      ),
-    );
+  // ──────────────────────────────
+  // UI WIDGETS
+  // ──────────────────────────────
+
+  // In tracking_detail_page.dart
+  // Widget _trackingTimeline(TrackingModel t) => Card(
+  //   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+  //   elevation: 4,
+  //   child: Padding(
+  //     padding: const EdgeInsets.all(16),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         const Text(
+  //           "Tracking History",
+  //           style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+  //         ),
+  //         const Divider(),
+  //         ...t.status_history.asMap().entries.map((entry) {
+  //           final index = entry.key;
+  //           final update = entry.value;
+  //           final isLast = index == t.status_history.length - 1;
+  //           final isCurrent =
+  //               update.status.toLowerCase() == t.status.toLowerCase();
+
+  //           return Row(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               // Timeline Dot + Line
+  //               Column(
+  //                 children: [
+  //                   Container(
+  //                     width: 14,
+  //                     height: 14,
+  //                     decoration: BoxDecoration(
+  //                       color: isCurrent ? Colors.blueAccent : Colors.green,
+  //                       shape: BoxShape.circle,
+  //                       border: Border.all(color: Colors.white, width: 2),
+  //                       boxShadow: [
+  //                         BoxShadow(
+  //                           color: Colors.black12,
+  //                           blurRadius: 4,
+  //                           offset: Offset(0, 2),
+  //                         ),
+  //                       ],
+  //                     ),
+  //                   ),
+  //                   if (!isLast)
+  //                     Container(width: 2, height: 60, color: Colors.grey[300]),
+  //                 ],
+  //               ),
+  //               const SizedBox(width: 12),
+  //               // Content
+  //               Expanded(
+  //                 child: Padding(
+  //                   padding: const EdgeInsets.only(bottom: 24),
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: [
+  //                       Text(
+  //                         update.status,
+  //                         style: TextStyle(
+  //                           fontWeight: isCurrent
+  //                               ? FontWeight.bold
+  //                               : FontWeight.w500,
+  //                           color: isCurrent
+  //                               ? Colors.blueAccent
+  //                               : Colors.black87,
+  //                           fontSize: 15,
+  //                         ),
+  //                       ),
+  //                       const SizedBox(height: 4),
+  //                       Text(
+  //                         update.location,
+  //                         style: TextStyle(
+  //                           color: Colors.grey[600],
+  //                           fontSize: 13,
+  //                         ),
+  //                       ),
+  //                       if (update.notes != null)
+  //                         Padding(
+  //                           padding: const EdgeInsets.only(top: 4),
+  //                           child: Text(
+  //                             update.notes!,
+  //                             style: TextStyle(
+  //                               color: Colors.grey[500],
+  //                               fontStyle: FontStyle.italic,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       const SizedBox(height: 4),
+  //                       Text(
+  //                         _formatDate(update.timestamp),
+  //                         style: TextStyle(
+  //                           color: Colors.grey[500],
+  //                           fontSize: 12,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           );
+  //         }).toList(),
+  //       ],
+  //     ),
+  //   ),
+  // );
+
+  // Helper
+  String _formatDate(DateTime date) {
+    final now = DateTime.now();
+    final diff = now.difference(date);
+    if (diff.inDays > 0) return '${diff.inDays}d ago';
+    if (diff.inHours > 0) return '${diff.inHours}h ago';
+    if (diff.inMinutes > 0) return '${diff.inMinutes}m ago';
+    return 'Just now';
   }
 
-  Widget _downloadReceiptButton(dynamic tracking) {
+  Widget _headerCard(TrackingModel t) => Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 4,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Tracking No: ${t.tracking_number}",
+            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          Chip(
+            label: Text(t.status, style: const TextStyle(color: Colors.white)),
+            backgroundColor: _statusColor(t.status),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _packageSummary(TrackingModel t) => Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 4,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Package Summary",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.person),
+            title: Text("Sender: ${t.sender_name}"),
+            subtitle: Text(t.dispatch_location),
+          ),
+          ListTile(
+            leading: const Icon(Icons.location_on),
+            title: Text("Receiver: ${t.receiver_name}"),
+            subtitle: Text(t.destination),
+          ),
+          ListTile(
+            leading: const Icon(Icons.inventory),
+            title: Text("Shipment: ${t.shipment}"),
+            subtitle: Text("Qty: ${t.quantity}"),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _deliveryInfo(TrackingModel t) => Card(
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+    elevation: 4,
+    child: Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Delivery Info",
+            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+          ),
+          const Divider(),
+          ListTile(
+            leading: const Icon(Icons.payments),
+            title: Text("Amount Due: ₦${t.amount_due}"),
+            subtitle: Text("Mode: ${t.payment_mode}"),
+          ),
+          ListTile(
+            leading: const Icon(Icons.schedule),
+            title: Text("Delivery Time: ${t.delivery_time}"),
+            subtitle: Text("Est: ${t.estimated_delivery}"),
+          ),
+          ListTile(
+            leading: const Icon(Icons.description),
+            title: const Text("Dispatch Details"),
+            subtitle: Text(t.dispatch_details),
+          ),
+        ],
+      ),
+    ),
+  );
+
+  Widget _downloadReceiptButton(TrackingModel t) {
     return Center(
       child: ElevatedButton.icon(
         style: ElevatedButton.styleFrom(
@@ -651,41 +316,70 @@ class TrackingDetailsPage extends ConsumerWidget {
           "Download Receipt",
           style: TextStyle(color: Colors.white),
         ),
-        onPressed: () async {
-          final pdf = pw.Document();
-          pdf.addPage(
-            pw.Page(
-              build: (pw.Context context) => pw.Column(
-                crossAxisAlignment: pw.CrossAxisAlignment.start,
-                children: [
-                  pw.Text("Tracking Number: ${tracking.trackingNumber}"),
-                  pw.Text("Status: ${tracking.status}"),
-                  pw.Text("Sender: ${tracking.senderName}"),
-                  pw.Text("Receiver: ${tracking.receiverName}"),
-                  pw.Text("Amount: ₦${tracking.amount}"),
-                ],
-              ),
-            ),
-          );
-
-          await Printing.layoutPdf(
-            onLayout: (PdfPageFormat format) async => pdf.save(),
-          );
-        },
+        onPressed: () => _generateAndPrintPdf(t),
       ),
     );
   }
 
-  Color _getStatusColor(String status) {
-    switch (status.toLowerCase()) {
-      case "delivered":
-        return Colors.green;
-      case "in transit":
-        return Colors.orange;
-      case "dispatched":
-        return Colors.blue;
-      default:
-        return Colors.grey;
+  Future<void> _generateAndPrintPdf(TrackingModel t) async {
+    final pdf = pw.Document();
+
+    pdf.addPage(
+      pw.Page(
+        build: (_) => pw.Column(
+          crossAxisAlignment: pw.CrossAxisAlignment.start,
+          children: [
+            pw.Text(
+              "Tracking: ${t.tracking_number}",
+              style: const pw.TextStyle(fontSize: 16),
+            ),
+            pw.Text(
+              "Status: ${t.status}",
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+            pw.Text(
+              "Sender: ${t.sender_name}",
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+            pw.Text(
+              "Receiver: ${t.receiver_name}",
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+            pw.Text(
+              "Amount: ₦${t.amount_due}",
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+            pw.Text(
+              "Est Delivery: ${t.estimated_delivery}",
+              style: const pw.TextStyle(fontSize: 14),
+            ),
+          ],
+        ),
+      ),
+    );
+
+    try {
+      await Printing.layoutPdf(onLayout: (_) => pdf.save());
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text("Receipt opened for printing/download")),
+        );
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text("Failed to generate PDF: $e")));
+      }
     }
+  }
+
+  Color _statusColor(String status) {
+    return switch (status.toLowerCase()) {
+      "delivered" => Colors.green,
+      "in transit" => Colors.orange,
+      "dispatched" => Colors.blue,
+      _ => Colors.grey,
+    };
   }
 }
