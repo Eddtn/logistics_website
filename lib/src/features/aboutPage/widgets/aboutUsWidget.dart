@@ -121,7 +121,7 @@ class aboutUsWidget extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: screenHeight * 0.02),
-                    Container(
+                    SizedBox(
                       width: screenWidth * 0.9,
                       // margin: EdgeInsets.all(15),
                       child: Column(

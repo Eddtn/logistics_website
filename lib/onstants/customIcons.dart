@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HoverCircleIcon extends StatefulWidget {
-  final IconData icon;
+  final Object icon;
   final double size;
   final bool enableHover;
 
@@ -32,14 +32,24 @@ class _HoverCircleIconState extends State<HoverCircleIcon> {
     }
   }
 
+  Widget _buildIcon(Color iconColor) {
+    if (widget.icon is FaIconData) {
+      return FaIcon(widget.icon as FaIconData, color: iconColor, size: widget.size * 0.5);
+    }
+
+    if (widget.icon is IconData) {
+      return Icon(widget.icon as IconData, color: iconColor, size: widget.size * 0.5);
+    }
+
+    return const SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final backgroundColor = _isHovered ? Colors.white : Color(0xff1F1F2E);
+    final backgroundColor = _isHovered ? Colors.white : const Color(0xff1F1F2E);
     final iconColor = _isHovered ? Colors.black : Colors.white;
 
     return MouseRegion(
-      // onEnter: (_) => setState(() => _isHovered = true),
-      // onExit: (_) => setState(() => _isHovered = false),
       onEnter: _onEnter,
       onExit: _onExit,
       child: AnimatedContainer(
@@ -51,15 +61,15 @@ class _HoverCircleIconState extends State<HoverCircleIcon> {
           color: backgroundColor,
           border: Border.all(color: Colors.white, width: 2),
         ),
-        child: Icon(widget.icon, color: iconColor, size: widget.size * 0.5),
+        child: _buildIcon(iconColor),
       ),
     );
   }
 }
 
-class MyPage extends StatelessWidget {
+class SocialIcons extends StatelessWidget {
   final bool shouldEnableHover;
-  const MyPage({super.key, required this.shouldEnableHover});
+  const SocialIcons({super.key, required this.shouldEnableHover});
 
   @override
   Widget build(BuildContext context) {

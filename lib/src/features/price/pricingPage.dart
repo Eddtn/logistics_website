@@ -50,9 +50,9 @@ class _AboutUsPageState extends State<PricingPage> {
         // controller: _scrollController,
         child: Column(
           children: [
-            AppBarWidget(),
+            AppBarWidget(onNavigate: (String value) {  },),
 
-            firsthomePage(
+            HeroSectionWidget(
               height: 350,
               child: Column(
                 // mainAxisSize: MainAxisSize.min,
@@ -99,7 +99,7 @@ class _AboutUsPageState extends State<PricingPage> {
               ),
             ),
             PricingSection(),
-            Container(height: 350, child: TestimonySection()),
+            SizedBox(height: 350, child: TestimonySection()),
             FooterPage(),
           ],
         ),

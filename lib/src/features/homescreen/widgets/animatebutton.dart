@@ -4,8 +4,7 @@ class AnimatedPlayButton extends StatefulWidget {
   final double size;
   final VoidCallback? onPressed;
 
-  const AnimatedPlayButton({Key? key, this.size = 60, this.onPressed})
-    : super(key: key);
+  const AnimatedPlayButton({super.key, this.size = 60, this.onPressed});
 
   @override
   State<AnimatedPlayButton> createState() => _AnimatedPlayButtonState();

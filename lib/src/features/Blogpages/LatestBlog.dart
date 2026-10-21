@@ -3,9 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:logistics_website/onstants/appbar.dart';
 import 'package:logistics_website/onstants/floatingWidget.dart';
 import 'package:logistics_website/onstants/footer.dart';
-import 'package:logistics_website/onstants/pagechange.dart';
-import 'package:logistics_website/onstants/responsiveness.dart';
-import 'package:logistics_website/src/features/Blogpages/widgets/latestblogWodget.dart';
 import 'package:logistics_website/src/features/homescreen/widgets/blogSection.dart';
 import 'package:logistics_website/src/features/homescreen/widgets/firsthomePage.dart';
 
@@ -58,9 +55,9 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
         controller: _scrollController,
         child: Column(
           children: [
-            AppBarWidget(),
+            AppBarWidget(onNavigate: (String value) {  },),
 
-            firsthomePage(
+            HeroSectionWidget(
               height: 350,
               child: Column(
                 // mainAxisSize: MainAxisSize.min,
@@ -108,8 +105,9 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
             ),
 
             Container(
-              padding: EdgeInsets.all(40),
+              // padding: EdgeInsets.all(40),
               // height: screenHeight * 3.9,
+               padding: EdgeInsets.all(screenWidth < 700 ? 16 : 40),
               child: Row(
                 // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -117,38 +115,38 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                     child: Column(
                       children: [
                         BlogContainerwidget(
-                          screenHeight: screenHeight,
-                          screenWidth: screenWidth * 1,
+                          screenHeight: 80,
+                          screenWidth: 80,
                           containerImage: 'assets/images/blog-1.jpg',
                           profileImage: 'assets/images/user.jpg',
                           name: 'John Doe',
                           jobTitle: "Web Design",
                           heading: "Kasd tempor diam sea justo dolor",
                           comments:
-                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna",
+                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna", date: '',
                         ),
 
                         BlogContainerwidget(
-                          screenHeight: screenHeight,
-                          screenWidth: screenWidth,
+                          screenHeight: 80,
+                          screenWidth: 80,
                           containerImage: 'assets/images/blog-2.jpg',
                           profileImage: 'assets/images/user.jpg',
                           name: 'John Doe',
                           jobTitle: "Web Design",
                           heading: "Kasd tempor diam sea justo dolor",
                           comments:
-                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna",
+                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna", date: '',
                         ),
                         BlogContainerwidget(
-                          screenHeight: screenHeight,
-                          screenWidth: screenWidth,
+                          screenHeight: 80,
+                          screenWidth: 80,
                           containerImage: 'assets/images/blog-1.jpg',
                           profileImage: 'assets/images/user.jpg',
                           name: 'John Doe',
                           jobTitle: "Web Design",
                           heading: "Kasd tempor diam sea justo dolor",
                           comments:
-                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna",
+                              "Dolor sea ipsum ipsum et. Erat duo lorem magna vero dolor dolores. Rebum eirmod no dolor diam dolor amet ipsum. Lorem lorem sea sed diam est lorem magna", date: '',
                         ),
                       ],
                     ),
@@ -341,7 +339,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                           ),
                         ),
 
-                        Container(
+                        SizedBox(
                           width: screenWidth * 0.3,
                           // margin: EdgeInsets.only(left: 20),
                           child: Column(
@@ -352,7 +350,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 color: Color(0xffF2F2F4),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenHeight * 0.5,
                                       width: screenWidth * 0.1,
                                       // color: Color(0xFFFF4800),
@@ -378,7 +376,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 color: Color(0xffF2F2F4),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenHeight * 0.5,
                                       width: screenWidth * 0.1,
                                       // color: Color(0xFFFF4800),
@@ -404,7 +402,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 color: Color(0xffF2F2F4),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenHeight * 0.5,
                                       width: screenWidth * 0.1,
                                       // color: Color(0xFFFF4800),
@@ -430,7 +428,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 color: Color(0xffF2F2F4),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenHeight * 0.5,
                                       width: screenWidth * 0.1,
                                       // color: Color(0xFFFF4800),
@@ -456,7 +454,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
                                 color: Color(0xffF2F2F4),
                                 child: Row(
                                   children: [
-                                    Container(
+                                    SizedBox(
                                       height: screenHeight * 0.5,
                                       width: screenWidth * 0.1,
                                       // color: Color(0xFFFF4800),
@@ -480,7 +478,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
 
                         SizedBox(height: 45),
 
-                        Container(
+                        SizedBox(
                           // margin: EdgeInsets.only(left: 20),
                           height: screenHeight * 0.4,
                           width: screenWidth * 0.3,
@@ -616,7 +614,7 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
             ),
 
             // LatestBlogWidget(),
-            // BlogSection(),
+            BlogSection(),
             FooterPage(),
           ],
         ),
@@ -625,3 +623,4 @@ class _LatestBlogScreenState extends State<LatestBlogScreen> {
     );
   }
 }
+

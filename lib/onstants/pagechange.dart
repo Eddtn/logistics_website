@@ -60,12 +60,7 @@ class _HighlightMultipleTextState extends State<NextPageChange> {
         buildBox(Icon(Icons.keyboard_double_arrow_right_rounded), 2),
         buildBox(Icon(Icons.keyboard_double_arrow_right_rounded), 3),
         const SizedBox(width: 5),
-        // buildBox(Text('1'), 1),
-        // const SizedBox(width: 5),
-        // buildBox(Text("2"), 2),
-        // const SizedBox(width: 5),
-        // buildBox(Text("3"), 3),
-        // const SizedBox(width: 5),
+
         buildBox(Icon(Icons.keyboard_double_arrow_right_rounded), 4),
       ],
     );

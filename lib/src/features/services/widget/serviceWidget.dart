@@ -50,7 +50,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                       children: [
                         Flexible(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -104,7 +104,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         SizedBox(width: 5),
                         Flexible(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -161,7 +161,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
                         SizedBox(width: 5),
                         Flexible(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -218,7 +218,7 @@ class _ServiceWidgetState extends State<ServiceWidget> {
 
                         Flexible(
                           flex: 1,
-                          child: Container(
+                          child: SizedBox(
                             width: 300,
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,

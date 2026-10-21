@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart' show FaIcon;
+import 'package:font_awesome_flutter/font_awesome_flutter.dart' show FaIcon, FaIconData;
 import 'package:url_launcher/url_launcher.dart';
 
 class SocialIcon extends StatelessWidget {
-  final IconData icon;
+  final FaIconData icon;
   final String url;
   final Color? color;
 
-  const SocialIcon({required this.icon, required this.url, this.color});
+  const SocialIcon({super.key, required this.icon, required this.url, this.color});
 
   @override
   Widget build(BuildContext context) {

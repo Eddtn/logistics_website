@@ -51,9 +51,9 @@ class _AboutUsPageState extends State<AboutUsPage> {
         controller: _scrollController,
         child: Column(
           children: [
-            AppBarWidget(),
+            AppBarWidget(onNavigate: (String value) {  },),
 
-            firsthomePage(
+            HeroSectionWidget(
               height: 350,
               child: Column(
                 // mainAxisSize: MainAxisSize.min,

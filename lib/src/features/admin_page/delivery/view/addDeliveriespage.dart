@@ -235,7 +235,7 @@ class _AddTrackingPageState extends ConsumerState<AddDeliveriesPage> {
           filled: true,
           fillColor: Colors.grey[100],
         ),
-        value: label == "Status" ? status : paymentMode,
+        initialValue: label == "Status" ? status : paymentMode,
         items: options
             .map((e) => DropdownMenuItem(value: e, child: Text(e)))
             .toList(),

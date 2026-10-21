@@ -1,18 +1,7 @@
-// Copyright 2020, the Flutter project authors. Please see the AUTHORS file
-// for details. All rights reserved. Use of this source code is governed by a
-// BSD-style license that can be found in the LICENSE file.
 import 'package:flutter/material.dart';
 
-/// Adaptive Window in Material has five different window sizes. Each window size
-/// represents a range of devices.
-///
-/// Extra small represents phones and small tablets in portrait view.
-/// Small represents tablets in portrait view and phones in landscape view.
-/// Medium represents large tablets in landscape view.
-/// Large represents computer screens.
-/// Extra large represents large computer screens.
-///
-/// https://material.io/design/layout/responsive-layout-grid.html#breakpoints
+
+
 class AdaptiveWindowType {
   const AdaptiveWindowType._({
     required this.name,

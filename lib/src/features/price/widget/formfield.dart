@@ -5,7 +5,7 @@ import 'package:logistics_website/onstants/customTextField.dart';
 class FormSection extends StatelessWidget {
   // bool isMobile;
   // bool isTablet;
-  FormSection({
+  const FormSection({
     super.key,
     //  required this.isMobile, required this.isTablet
   });
@@ -100,7 +100,7 @@ Widget _dropdownField() {
     ),
     child: DropdownButtonFormField<String>(
       decoration: const InputDecoration(border: InputBorder.none),
-      value: null,
+      initialValue: null,
       hint: const Text("Select Service"),
       items: const [
         DropdownMenuItem(value: "design", child: Text("UI/UX Design")),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 
-class firsthomePage extends StatelessWidget {
+class HeroSectionWidget extends StatelessWidget {
   final Widget child;
   double height;
 
-  firsthomePage({super.key, required this.child, required this.height});
+  HeroSectionWidget({super.key, required this.child, required this.height});
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
+        SizedBox(
           height: height,
 
           // height: 550,

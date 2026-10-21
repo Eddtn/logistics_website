@@ -28,7 +28,7 @@ class _WhyChooseUsState extends State<WhyChooseUs> {
                 child: Column(
                   children: [
                     /// LEFT COLUMN (Image and Strip)
-                    Container(
+                    SizedBox(
                       // margin: EdgeInsets.only(left: 40),
                       height: screenHeight * 1.0,
                       width: screenWidth * 0.9,
