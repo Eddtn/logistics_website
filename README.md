@@ -11,16 +11,16 @@ A responsive logistics and transportation website built with **Flutter Web** to 
 ![Logistics Website Homepage](SCREENSHOT/logictrack_home1.png)
 
 ### Services
-![Logistics Services](SCREENSHOT\services.png)
+![Logistics Services](SCREENSHOT/services.png)
 
 
 ### Request a Quote
-![Request a Quote](SCREENSHOT\guote.png)
+![Request a Quote](SCREENSHOT/guote.png)
 
 
 
 ### Admion Dashboard
-![Logistics admin_dashboard](SCREENSHOT\logitrackadmindashboard.png)
+![Logistics admin_dashboard](SCREENSHOT/logitrackadmindashboard.png)
 
 
 
