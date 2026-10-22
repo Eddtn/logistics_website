@@ -8,13 +8,13 @@ A responsive logistics and transportation website built with **Flutter Web** to 
 
 
 ### Homepage
-![Logistics Website Homepage](SCREENSHOT\logictrack_home1.png)
+![Logistics Website Homepage](SCREENSHOT/logictrack_home1.png)
 
 ### Services
 ![Logistics Services](screenshots/services.png)
 
 ### Request a Quote
-![Request a Quote](SCREENSHOT\logictrack_trackpage1.png)
+![Request a Quote](SCREENSHOT/logictrack_trackpage1.png)
 
 ## 🌐 Live Demo
 
