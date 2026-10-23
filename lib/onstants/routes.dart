@@ -13,9 +13,9 @@ final GoRouter router = GoRouter(
         return const   HomeScreen();
 
 
-        //  LoginPage();
-        
-      },
+        // LoginPage();
+
+          },
       routes: <RouteBase>[
          GoRoute(
           path: 'company',
